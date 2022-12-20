@@ -26,7 +26,7 @@ public class AccelControl : MonoBehaviour
 
         initialFriction = 0.2f;
         slidingFrictionCoeff = 0.5f;
-        moveSpeed = 2;
+        moveSpeed = 3;
 
         debugMode = true;
     }
