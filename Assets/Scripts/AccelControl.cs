@@ -16,8 +16,6 @@ public class AccelControl : MonoBehaviour
     private float slidingFrictionCoeff;
     private float moveSpeed;
 
-    private bool debugMode;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -27,8 +25,6 @@ public class AccelControl : MonoBehaviour
         initialFriction = 0.2f;
         slidingFrictionCoeff = 0.5f;
         moveSpeed = 3;
-
-        debugMode = true;
     }
 
     // Update is called once per frame
@@ -57,7 +53,7 @@ public class AccelControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject);
+        Debug.Log($"{name} collided with {collision.gameObject}");
     }
 
     public void Recalibrate()
