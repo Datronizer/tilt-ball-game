@@ -42,7 +42,7 @@ public class AccelControl : MonoBehaviour
         flatMagnitude = (tiltValue.x * tiltValue.x) + (tiltValue.y * tiltValue.y);
         if (flatMagnitude > Mathf.Pow(initialFriction, 2))
         {
-            rb.AddForce(groundedTiltValue * moveSpeed);
+            rb.AddForce(10 * moveSpeed * groundedTiltValue);
         }
         else
         {

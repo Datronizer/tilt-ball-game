@@ -8,5 +8,6 @@ public class GlowingButton : MonoBehaviour
     {
         Debug.Log("Boop");
         SendMessageUpwards("ShuffleGlowingSquare", false);
+        SendMessageUpwards("AddScore", 1);
     }
 }

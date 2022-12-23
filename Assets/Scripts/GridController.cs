@@ -62,8 +62,10 @@ public class GridController : MonoBehaviour
 
     int GetRandom()
     {
+        // Makeshift randomizer
         float fruit = Random.value;
-        float juice = fruit * 100; // da juice
+        int pulp = Mathf.RoundToInt(Random.Range(0,9));
+        float juice = fruit * Mathf.Pow(10, pulp); // da juice
         int juiceJug = Mathf.RoundToInt(juice);
 
         switch (gridSize)
