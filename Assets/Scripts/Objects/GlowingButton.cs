@@ -6,7 +6,6 @@ public class GlowingButton : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Boop");
         SendMessageUpwards("ShuffleGlowingSquare", false);
         SendMessageUpwards("AddScore", 1);
     }
