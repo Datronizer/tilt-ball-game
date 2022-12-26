@@ -7,21 +7,27 @@ public class AccelControl : MonoBehaviour
     [SerializeField] private Rigidbody rb;
 
     // public for debug, private when done
-    public Vector3 startingOrientation;
-    public Vector3 slidingFrictionVector;
-    public Vector3 tiltValue;
-    public float flatMagnitude;
-    public float initialFriction;
+    public Vector3 startingOrientation {get; private set;}
+    public Vector3 slidingFrictionVector {get; private set;}
+    public Vector3 tiltValue {get; private set;}
+    public float flatMagnitude {get; private set;}
+    public float initialFriction {get; private set;}
 
     private float slidingFrictionCoeff;
     private float moveSpeed;
 
+    private bool desktopMode;
+
     // Start is called before the first frame update
     void Start()
     {
-        // Grabs starting orientation to calculate the delta
-        Vector3 startingOrientation = Input.acceleration;
+        desktopMode = true;
 
+        if (!desktopMode){
+            // Grabs starting orientation to calculate the delta
+            Vector3 startingOrientation = Input.acceleration;
+        }
+        
         initialFriction = 0.2f;
         slidingFrictionCoeff = 0.5f;
         moveSpeed = 3;
@@ -30,6 +36,25 @@ public class AccelControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(!desktopMode){
+            MovePlayer();
+        }
+        else{
+            MovePlayerWithKeyboard();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log($"{name} collided with {collision.gameObject}");
+    }
+
+    public void Recalibrate()
+    {
+        startingOrientation = Input.acceleration;
+    }
+
+    private void MovePlayer(){
         // Calculate tilt delta
         Vector3 currentTilt = Input.acceleration;
         tiltValue = currentTilt - startingOrientation;
@@ -51,13 +76,16 @@ public class AccelControl : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log($"{name} collided with {collision.gameObject}");
-    }
+    private void MovePlayerWithKeyboard(){
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-    public void Recalibrate()
-    {
-        startingOrientation = Input.acceleration;
+        // Necessary vectors
+        Vector3 groundedTiltValue = new Vector3(horizontal, 0, vertical);
+        slidingFrictionVector = new Vector3(rb.velocity.x * -slidingFrictionCoeff, 0, rb.velocity.z * -slidingFrictionCoeff);
+
+        // Apply force if tilt magnitude passes the initial friction
+        rb.AddForce(4 * moveSpeed * groundedTiltValue);
+        rb.AddForce(slidingFrictionVector);
     }
 }

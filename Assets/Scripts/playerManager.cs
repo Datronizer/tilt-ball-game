@@ -36,8 +36,6 @@ public class playerManager : MonoBehaviour
         Vector3 modelPosition = model.transform.position;
         lightEmitter.transform.position = new Vector3(modelPosition.x, modelPosition.y + 0.25f, modelPosition.z);
 
-        // Check collision
-
         // QoL checks
         PreventClippingOffWorld();
         StopRotationWhenHalted();
