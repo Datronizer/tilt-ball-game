@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class playerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour
 {
-    [SerializeField] private Light lightEmitter;
     [SerializeField] private GameObject model;
 
     [SerializeField] private TextMeshProUGUI accelDisplay;
@@ -32,14 +31,10 @@ public class playerManager : MonoBehaviour
         // Get velocity
         velocity = Vector3.Magnitude(rb.velocity);
 
-        // Makes the light moves with the model (parenting is garbo)
-        Vector3 modelPosition = model.transform.position;
-        lightEmitter.transform.position = new Vector3(modelPosition.x, modelPosition.y + 0.25f, modelPosition.z);
-
         // QoL checks
         PreventClippingOffWorld();
         StopRotationWhenHalted();
-        DebugText(true);
+        DebugText(false);
     }
 
     private void DebugText(bool debugModeOn)
@@ -53,7 +48,11 @@ public class playerManager : MonoBehaviour
             $"Velocity: {velocity}\n" +
             $"canMove? {(accelControl.flatMagnitude > Mathf.Pow(accelControl.initialFriction, 2) ? "True" : "False")}\n" +
             $"isColliding? {(isColliding ? "True" : "False")}\n";
-        }   
+        }
+
+        else{
+            accelDisplay.text = null;
+        }
     }
 
     private void PreventClippingOffWorld()

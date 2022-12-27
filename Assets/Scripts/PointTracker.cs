@@ -12,11 +12,12 @@ public class PointTracker : MonoBehaviour
     void AddScore(int value)
     {
         point += value;
+        ScoreboardUpdate();
     }
 
-    private void Update()
-    {
+    private void ScoreboardUpdate() {
         scoreboard.text = $"{point}\n" +
             $"Score";
+
     }
 }
