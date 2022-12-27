@@ -9,4 +9,10 @@ public class GlowingButton : MonoBehaviour
         SendMessageUpwards("ShuffleGlowingSquare", false);
         SendMessageUpwards("AddScore", 1);
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        SendMessageUpwards("ShuffleGlowingSquare", false);
+        SendMessageUpwards("AddScore", 1);
+    }
 }
