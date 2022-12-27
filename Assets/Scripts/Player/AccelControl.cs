@@ -46,7 +46,7 @@ public class AccelControl : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"{name} collided with {collision.gameObject}");
+        // Debug.Log($"{name} collided with {collision.gameObject}");
     }
 
     public void Recalibrate()
