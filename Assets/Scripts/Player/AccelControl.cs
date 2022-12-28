@@ -7,11 +7,11 @@ public class AccelControl : MonoBehaviour
     [SerializeField] private Rigidbody rb;
 
     // public for debug, private when done
-    public Vector3 startingOrientation {get; private set;}
-    public Vector3 slidingFrictionVector {get; private set;}
-    public Vector3 tiltValue {get; private set;}
-    public float flatMagnitude {get; private set;}
-    public float initialFriction {get; private set;}
+    public Vector3 StartingOrientation { get; private set; }
+    public Vector3 SlidingFrictionVector { get; private set; }
+    public Vector3 TiltValue { get; private set; }
+    public float FlatMagnitude { get; private set; }
+    public float InitialFriction { get; private set; }
 
     private float slidingFrictionCoeff;
     private float moveSpeed;
@@ -23,12 +23,13 @@ public class AccelControl : MonoBehaviour
     {
         desktopMode = true;
 
-        if (!desktopMode){
+        if (!desktopMode)
+        {
             // Grabs starting orientation to calculate the delta
             Vector3 startingOrientation = Input.acceleration;
         }
-        
-        initialFriction = 0.2f;
+
+        InitialFriction = 0.2f;
         slidingFrictionCoeff = 0.5f;
         moveSpeed = 3;
     }
@@ -36,10 +37,12 @@ public class AccelControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(!desktopMode){
+        if (!desktopMode)
+        {
             MovePlayer();
         }
-        else{
+        else
+        {
             MovePlayerWithKeyboard();
         }
     }
@@ -51,41 +54,43 @@ public class AccelControl : MonoBehaviour
 
     public void Recalibrate()
     {
-        startingOrientation = Input.acceleration;
+        StartingOrientation = Input.acceleration;
     }
 
-    private void MovePlayer(){
+    private void MovePlayer()
+    {
         // Calculate tilt delta
         Vector3 currentTilt = Input.acceleration;
-        tiltValue = currentTilt - startingOrientation;
+        TiltValue = currentTilt - StartingOrientation;
 
         // Necessary vectors
-        Vector3 groundedTiltValue = new Vector3(tiltValue.x, 0, tiltValue.y);
-        slidingFrictionVector = new Vector3(rb.velocity.x * -slidingFrictionCoeff, 0, rb.velocity.z * -slidingFrictionCoeff);
+        Vector3 groundedTiltValue = new Vector3(TiltValue.x, 0, TiltValue.y);
+        SlidingFrictionVector = new Vector3(rb.velocity.x * -slidingFrictionCoeff, 0, rb.velocity.z * -slidingFrictionCoeff);
 
         // Apply force if tilt magnitude passes the initial friction
-        flatMagnitude = (tiltValue.x * tiltValue.x) + (tiltValue.y * tiltValue.y);
-        if (flatMagnitude > Mathf.Pow(initialFriction, 2))
+        FlatMagnitude = (TiltValue.x * TiltValue.x) + (TiltValue.y * TiltValue.y);
+        if (FlatMagnitude > Mathf.Pow(InitialFriction, 2))
         {
             rb.AddForce(10 * moveSpeed * groundedTiltValue);
         }
         else
         {
             // Apply friction opposite of object movement direction (does not apply for y)
-            rb.AddForce(slidingFrictionVector);
+            rb.AddForce(SlidingFrictionVector);
         }
     }
 
-    private void MovePlayerWithKeyboard(){
+    private void MovePlayerWithKeyboard()
+    {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
         // Necessary vectors
         Vector3 groundedTiltValue = new Vector3(horizontal, 0, vertical);
-        slidingFrictionVector = new Vector3(rb.velocity.x * -slidingFrictionCoeff, 0, rb.velocity.z * -slidingFrictionCoeff);
+        SlidingFrictionVector = new Vector3(rb.velocity.x * -slidingFrictionCoeff, 0, rb.velocity.z * -slidingFrictionCoeff);
 
         // Apply force if tilt magnitude passes the initial friction
         rb.AddForce(4 * moveSpeed * groundedTiltValue);
-        rb.AddForce(slidingFrictionVector);
+        rb.AddForce(SlidingFrictionVector);
     }
 }

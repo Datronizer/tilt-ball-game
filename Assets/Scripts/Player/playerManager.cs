@@ -11,10 +11,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI accelDisplay;
 
-    private bool isColliding;
+    private readonly bool isColliding;
 
     private Rigidbody rb;
-    private Collider modelCollider;
     private AccelControl accelControl;
 
     private float velocity;
@@ -23,7 +22,6 @@ public class PlayerManager : MonoBehaviour
     void Start()
     {
         rb = model.GetComponent<Rigidbody>();
-        modelCollider = model.GetComponent<Collider>();
         accelControl = model.GetComponent<AccelControl>();
     }
 
@@ -44,11 +42,11 @@ public class PlayerManager : MonoBehaviour
         {
             accelDisplay.text =
                 $"Current Orientation: {Input.acceleration}\n"
-                + $"Orientation Delta: {accelControl.tiltValue}\n"
-                + $"Tilt Magnitude: {accelControl.flatMagnitude}\n"
-                + $"Friction: {accelControl.slidingFrictionVector}\n"
+                + $"Orientation Delta: {accelControl.TiltValue}\n"
+                + $"Tilt Magnitude: {accelControl.FlatMagnitude}\n"
+                + $"Friction: {accelControl.SlidingFrictionVector}\n"
                 + $"Velocity: {velocity}\n"
-                + $"canMove? {(accelControl.flatMagnitude > Mathf.Pow(accelControl.initialFriction, 2) ? "True" : "False")}\n"
+                + $"canMove? {(accelControl.FlatMagnitude > Mathf.Pow(accelControl.InitialFriction, 2) ? "True" : "False")}\n"
                 + $"isColliding? {(isColliding ? "True" : "False")}\n";
         }
         else
@@ -59,7 +57,7 @@ public class PlayerManager : MonoBehaviour
 
     private void StopRotationWhenHalted()
     {
-        if (velocity <= 0.01f)
+        if (velocity <= 0.025f)
         {
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
