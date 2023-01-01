@@ -61,27 +61,23 @@ public class GridController : MonoBehaviour
 
     int GetRandom()
     {
-        // Makeshift randomizer
-        float fruit = Random.value;
-        int pulp = Mathf.RoundToInt(Random.Range(0,9));
-        float juice = fruit * Mathf.Pow(10, pulp%3); // da juice
-        int juiceJug = Mathf.RoundToInt(juice);
+        // Simple randomizer
+        int banana = Mathf.RoundToInt(Random.Range(0, 99));
 
         switch (gridSize)
         {
             case 3:
-                return juiceJug % 3;
+                return banana % 3;
             case 5:
-                return juiceJug % 5;
+                return banana % 5;
             case 7:
-                return juiceJug % 7;
+                return banana % 7;
             case 9:
-                return juiceJug % 9;
+                return banana % 9;
             case 11:
-                return juiceJug % 11;
+                return banana % 11;
             default:
                 return 0;
         }
-
     }
 }
