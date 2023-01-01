@@ -36,13 +36,6 @@ public class GameStateManager : MonoBehaviour
         pauseMenu.interactable = false;
     }
 
-    void ExpandMenu()
-    {
-        pauseMenu.alpha = 1;
-        pauseMenu.blocksRaycasts = true;
-        pauseMenu.interactable = true;
-    }
-
     public void OnPauseButtonClicked()
     {
         PauseGame();
@@ -51,10 +44,5 @@ public class GameStateManager : MonoBehaviour
     public void OnResumeButtonClicked()
     {
         ResumeGame();
-    }
-
-    public void OnExpandClicked()
-    {
-        ExpandMenu();
     }
 }
