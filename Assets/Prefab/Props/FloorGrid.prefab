@@ -45,5 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridSquare: {fileID: 1745837003853538552, guid: c5c1387b3027ec04d9acaa0b7017175f, type: 3}
-  glowingButton: {fileID: 1267315250, guid: 01a8b302bf960654e9b7c73424fcf485, type: 3}
+  glowingButtonCollection:
+  - {fileID: 9000946707970866054, guid: 2095771b65a5fc04fb70aca384b478f2, type: 3}
+  - {fileID: 220456062344556856, guid: 10af736a483952245ae88eacd28168d0, type: 3}
+  - {fileID: 1267315250, guid: 01a8b302bf960654e9b7c73424fcf485, type: 3}
+  - {fileID: 6214501133492717494, guid: 75fe3694e25fb344c9f3bfdcd788e4e5, type: 3}
+  - {fileID: 7352084488284544172, guid: 6f1d11604c2aa4a44b557f9251678679, type: 3}
   gridSize: 3
