@@ -60,6 +60,11 @@ public class TabManager : MonoBehaviour
         }
     }
 
+    //void ShowTabContents()
+    //{
+    //    FindObjectOfType
+    //}
+
     // Gameplay tab
     // Mostly things that contribute to the main flow of the game like
     // more obstacles, multipliers, glowing squares, etc.
