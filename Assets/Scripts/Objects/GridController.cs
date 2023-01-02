@@ -15,7 +15,6 @@ public class GridController : MonoBehaviour
     {
         InstantiateGridSquares(gridSize);
         SpawnGlowingSquare();
-        ShuffleGlowingSquare();
     }
 
     void InstantiateGridSquares(int gridSize)
@@ -52,15 +51,6 @@ public class GridController : MonoBehaviour
         int x = GetRandom();
         int y = GetRandom();
 
-        GlowingButton glowingSquare = FindObjectOfType<GlowingButton>();
-
-        // Checks if current square is of same type. If no then swap.
-        GlowingButton newGlowingSquare = ChooseGlowingSquareType();
-        if (glowingSquare.name != newGlowingSquare.name)
-        {
-            glowingSquare = newGlowingSquare;
-        }
-
         // Prevents shuffling back to current square
         if (highlightedSquare.name == $"{x}, {y}")
         {
@@ -68,15 +58,21 @@ public class GridController : MonoBehaviour
         }
         else
         {
+            // Swapping square types
+            GlowingButton newGlowingButton = ChooseGlowingSquareType();
+
+            // Move square to new spot
             highlightedSquare = GameObject.Find($"{x}, {y}");
-            glowingSquare.transform.position = new Vector3(highlightedSquare.transform.position.x, -0.1f, highlightedSquare.transform.position.z);
+            Instantiate(newGlowingButton, new Vector3(highlightedSquare.transform.position.x, -0.1f, highlightedSquare.transform.position.z), Quaternion.identity, FindObjectOfType<GridController>().transform);
+
+            Debug.Log($"Success! Injected {newGlowingButton}");
         }
     }
 
     int GetRandom()
     {
         // Simple randomizer
-        int banana = Mathf.RoundToInt(UnityEngine.Random.Range(0, 99));
+        int banana = Random.Range(0, 99);
 
         return gridSize switch
         {
@@ -89,6 +85,11 @@ public class GridController : MonoBehaviour
         };
     }
 
+    GlowingButton ChooseGlowingSquareType(string buttonType)
+    {
+        GlowingButton foundButton = System.Array.Find(glowingButtonCollection, elt => elt.buttonType == buttonType);
+        return foundButton;
+    }
     GlowingButton ChooseGlowingSquareType()
     {
         /**
@@ -105,24 +106,25 @@ public class GridController : MonoBehaviour
          * 3) If B is in the radius of A, choose that square
          *    Else, move on to next radius.
          * 4) Repeat until you finish Uncommon. Then just straight up output Common.
+         * 
+         * (III) Finding the radius:
+         * 1) Fix A
+         * 2) Find the metric of A and B which is |A-B|
+         * 3) If m(A,B) less than radius then 
          */
 
-        Debug.Log("Rollllllllll");
+        int a = Random.Range(0, 25000);
+        int b = Random.Range(0, 25000);
 
-        int a = Mathf.RoundToInt(Random.Range(0, 25000));
-        int b = Mathf.RoundToInt(Random.Range(0, 25000));
+        int m = Mathf.Abs(a - b);
 
-        int[] radii = { 5, 25, 150, 2500, 10000 };
-        for (int i = 0; i > radii.Length; i++)
+        return m switch
         {
-            Debug.Log($"Rolling for radius {radii[i]}");
-            if (b > (a - radii[i]) && b < (a + radii[i]))
-            {
-                return glowingButtonCollection[i];
-                Debug.Log($"Roll successful. {glowingButtonCollection[i].name} is chosen!");
-            }
-        }
-
-        return glowingButtonCollection[4];
+            < 5 => ChooseGlowingSquareType("Legendary"),
+            < 25 => ChooseGlowingSquareType("Epic"),
+            < 150 => ChooseGlowingSquareType("Rare"),
+            < 2500 => ChooseGlowingSquareType("Uncommon"),
+            _ => ChooseGlowingSquareType("Common"),
+        };
     }
 }

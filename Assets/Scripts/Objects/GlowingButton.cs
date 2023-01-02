@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class GlowingButton : MonoBehaviour
 {
-    [SerializeField] private int buttonValue;
+    public string buttonType;
+    public int buttonValue;
 
     private void OnTriggerStay(Collider other)
     {
         SendMessageUpwards("ShuffleGlowingSquare", false);
         SendMessageUpwards("AddScore", buttonValue);
+        Destroy(this.gameObject);
     }
 }

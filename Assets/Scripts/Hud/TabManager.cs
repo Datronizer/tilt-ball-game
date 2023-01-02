@@ -14,7 +14,6 @@ public class TabManager : MonoBehaviour
     private void Start()
     {
         int i = 0;
-        Debug.Log(transform.position);
         foreach (var tabName in tabNames)
         {
             Button tab = Instantiate<Button>(tabPrefab, this.transform, false);
