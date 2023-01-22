@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2358780842901995004}
   - component: {fileID: 2358780842901995005}
+  - component: {fileID: 3457983655921112306}
   m_Layer: 0
   m_Name: FloorGrid
   m_TagString: Untagged
@@ -52,3 +53,16 @@ MonoBehaviour:
   - {fileID: 6214501133492717494, guid: 75fe3694e25fb344c9f3bfdcd788e4e5, type: 3}
   - {fileID: 7352084488284544172, guid: 6f1d11604c2aa4a44b557f9251678679, type: 3}
   gridSize: 3
+  randomizer: {fileID: 3457983655921112306}
+--- !u!114 &3457983655921112306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2358780842901995007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78c9865e05b458c4182986b52ea40a0e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -1,0 +1,28 @@
+{
+    "obstacles": [
+        {
+            "itemSprite": "null",
+            "itemName": "Common Square",
+            "flavorText": "I mean it's a pretty normal looking square.",
+
+            "maxLevel": 255,
+            "itemLevel": 1,
+            "itemScoreValue": 1,
+            "price": 10,
+
+            "multiplier": 1.0
+        },
+        {
+            "itemSprite": "null",
+            "itemName": "Uncommon Square",
+            "flavorText": "Ooh, lookie here, this one's green.",
+
+            "maxLevel": 255,
+            "itemLevel": 0,
+            "itemScoreValue": 2,
+            "price": 500,
+
+            "multiplier": 1.0
+        }
+    ]
+}

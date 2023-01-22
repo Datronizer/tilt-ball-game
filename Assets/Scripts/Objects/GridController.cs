@@ -9,6 +9,8 @@ public class GridController : MonoBehaviour
     [SerializeField] private GlowingButton[] glowingButtonCollection;
     [SerializeField] private int gridSize;
 
+    [SerializeField] private Randomizer randomizer;
+
     private GameObject highlightedSquare;
 
     private void Awake()
@@ -34,9 +36,8 @@ public class GridController : MonoBehaviour
     void SpawnGlowingSquare()
     {
         // Gets random coordinates
-        int x = GetRandom();
-        int y = GetRandom();
-        highlightedSquare = GameObject.Find($"{x}, {y}");
+        (int, int) point = randomizer.GetRandomCoordinatePair(this.gridSize);
+        highlightedSquare = GameObject.Find($"{point.Item1}, {point.Item2}");
 
         // Randomly chooses next glowing square
         GlowingButton glowingButton = ChooseGlowingSquareType();
@@ -48,11 +49,10 @@ public class GridController : MonoBehaviour
     void ShuffleGlowingSquare()
     {
         // Gets random coordinates
-        int x = GetRandom();
-        int y = GetRandom();
+        (int,int) point = randomizer.GetRandomCoordinatePair(this.gridSize);
 
         // Prevents shuffling back to current square
-        if (highlightedSquare.name == $"{x}, {y}")
+        if (highlightedSquare.name == $"{point.Item1}, {point.Item2}")
         {
             ShuffleGlowingSquare();
         }
@@ -62,28 +62,14 @@ public class GridController : MonoBehaviour
             GlowingButton newGlowingButton = ChooseGlowingSquareType();
 
             // Move square to new spot
-            highlightedSquare = GameObject.Find($"{x}, {y}");
+            highlightedSquare = GameObject.Find($"{point.Item1}, {point.Item2}");
             Instantiate(newGlowingButton, new Vector3(highlightedSquare.transform.position.x, -0.1f, highlightedSquare.transform.position.z), Quaternion.identity, FindObjectOfType<GridController>().transform);
 
             Debug.Log($"Success! Injected {newGlowingButton}");
         }
     }
 
-    int GetRandom()
-    {
-        // Simple randomizer
-        int banana = Random.Range(0, 99);
-
-        return gridSize switch
-        {
-            3 => banana % 3,
-            5 => banana % 5,
-            7 => banana % 7,
-            9 => banana % 9,
-            11 => banana % 11,
-            _ => 0,
-        };
-    }
+    
 
     GlowingButton ChooseGlowingSquareType(string buttonType)
     {

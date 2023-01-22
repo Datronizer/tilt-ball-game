@@ -6,13 +6,17 @@ using UnityEngine.UI;
 [System.Serializable]
 public class ShopItem : MonoBehaviour
 {
+    // Intangible data
     public Sprite itemSprite;
-
-    public int itemLevel;
     public string itemName;
+    public string flavorText;
+
+    public int maxLevel;
+
+    // Tangible data
+    public int itemLevel;
     public int itemScoreValue;
-    
     public int price;
 
-    public string flavorText;
+    public float multiplier;
 }
